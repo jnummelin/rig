@@ -24,6 +24,7 @@ type initSystem interface {
 	ServiceIsRunning(initsystem.Host, string) bool
 	ServiceScriptPath(initsystem.Host, string) (string, error)
 	DaemonReload(initsystem.Host) error
+	Status(initsystem.Host, string) (string, error)
 }
 
 // Kind returns "linux"
@@ -87,6 +88,11 @@ func (c Linux) ServiceScriptPath(h Host, s string) (string, error) {
 // DaemonReload performs an init system config reload
 func (c Linux) DaemonReload(h Host) error {
 	return c.is(h).DaemonReload(h)
+}
+
+// ServiceStatus returns the stringified service status for given service
+func (c Linux) ServiceStatus(h Host, s string) (string, error) {
+	return c.is(h).Status(h, s)
 }
 
 // CheckPrivilege returns an error if the user does not have passwordless sudo enabled

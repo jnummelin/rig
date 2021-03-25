@@ -42,3 +42,8 @@ func (i Systemd) ServiceIsRunning(h Host, s string) bool {
 func (i Systemd) ServiceScriptPath(h Host, s string) (string, error) {
 	return h.ExecOutputf(`sudo -i systemctl show -p FragmentPath %s.service 2> /dev/null | cut -d"=" -f2`, s)
 }
+
+// Status returns the stringified status info for the service
+func (i Systemd) Status(h Host, s string) (string, error) {
+	return h.ExecOutputf("sudo -i systemctl status --no-pager --full %s.service", s)
+}

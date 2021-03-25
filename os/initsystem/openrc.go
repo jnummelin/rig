@@ -42,3 +42,8 @@ func (i OpenRC) DisableService(h Host, s string) error {
 func (i OpenRC) ServiceIsRunning(h Host, s string) bool {
 	return h.Execf(`sudo rc-service %s status | grep -q "status: started"`, s) == nil
 }
+
+// Status returns the stringified status info for the service
+func (i OpenRC) Status(h Host, s string) (string, error) {
+	return h.ExecOutputf("sudo rc-service %s status", s)
+}
